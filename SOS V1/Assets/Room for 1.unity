@@ -3537,7 +3537,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 6032430203261967944, guid: 14f5395d480416e4a989591274dad62f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3557,8 +3557,8 @@ Transform:
   m_GameObject: {fileID: 1587454564}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.39, y: -0.36, z: -1}
-  m_LocalScale: {x: 0.5347055, y: 1.2771541, z: 1}
+  m_LocalPosition: {x: 0.48, y: 1.02, z: -1}
+  m_LocalScale: {x: 0.3277922, y: 0.3442292, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3572,14 +3572,60 @@ MonoBehaviour:
   m_GameObject: {fileID: 1587454564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd08475b23aa548b7b9d28397d430b32, type: 3}
+  m_Script: {fileID: 11500000, guid: 06d6f5c252d0a4c4e906605b50069782, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: PhotonUnityNetworking.Demos::Photon.Pun.Demo.PunBasics.CameraWork
-  distance: 7
-  height: 3
-  centerOffset: {x: 0, y: 0, z: 0}
-  followOnStart: 1
-  smoothSpeed: 0.125
+  m_EditorClassIdentifier: '::'
+  LeftTurn:
+    m_Name: Left Turn
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 52d75b82-b437-4bde-b310-faa4bf2c6019
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: f99c700a-0072-486f-86ba-f35f5c460e30
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Left Turn
+      m_Flags: 0
+    m_Flags: 0
+  ForwardMovement:
+    m_Name: Forward Movement
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a14ba17d-740a-464d-b0b4-8de6ef980fd5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: e6354500-18a5-4eb3-9a39-583c0bb6ffaf
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Forward Movement
+      m_Flags: 0
+    m_Flags: 0
+  RightTurn:
+    m_Name: Right Turn
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0b11b03d-e2f8-4858-9dfb-5cb701a29712
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: aab6d4de-3286-4869-837e-b37c6e4a0560
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Right Turn
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1 &2097258680
 GameObject:
   m_ObjectHideFlags: 0
@@ -3618,7 +3664,7 @@ Transform:
   m_GameObject: {fileID: 2097258680}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
