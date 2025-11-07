@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Com.MysticVentures.SOS.PlayerManager
   attackZone: {fileID: 6692667552902965031}
   Health: 1
+  PlayerUiPrefab: {fileID: 1823422808773762668, guid: 69309526d5a78544c8e9cf7f5c908a9f, type: 3}
 --- !u!114 &2710208264991150847
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -26,7 +26,18 @@ namespace Com.MysticVentures.SOS{
         #endregion
 
         #region MonoBehaviour Callbacks
+        void Start(){
+            if (PlayerUiPrefab != null){
+                GameObject _uiGo =  Instantiate(PlayerUiPrefab);
+                _uiGo.SendMessage ("SetTarget", this, SendMessageOptions.RequireReceiver);
+            }
+            else{
+                Debug.LogWarning("<Color=Red><a>Warning</a></Color> PlayerUiPrefab reference on player Prefab.", this);
+            }
+        }
         void Awake(){
+            GameObject _uiGo = Instantiate(this.PlayerUiPrefab);
+            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
             if (photonView.IsMine){
                 PlayerManager.LocalPlayerInstance = this.gameObject;
             }
@@ -76,6 +87,8 @@ namespace Com.MysticVentures.SOS{
         #endregion
         #region Custom
         public static GameObject LocalPlayerInstance;
+        [SerializeField]
+        public GameObject PlayerUiPrefab;
         void ProcessInputs(){
             if(Mouse.current.leftButton.wasPressedThisFrame){
                 if(!isFiring){
