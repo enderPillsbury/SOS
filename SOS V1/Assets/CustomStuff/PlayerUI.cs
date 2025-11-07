@@ -57,7 +57,7 @@ namespace Com.MysticVentures.SOS{
             }
         }
         [SerializeField]
-        private Vector3 screenOffset = new Vector3 (0f, -2f, 0f);
+        private Vector3 screenOffset = new Vector3 (0f, -4f, 0f);
         #endregion
     }
 }
