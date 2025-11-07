@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
+using System.Collections;
 
-public class BoatMovement : MonoBehaviour
+public class BoatMovement : MonoBehaviourPunCallbacks
 {
     string direction = "up";
-    public InputAction LeftTurn;
-    public InputAction ForwardMovement;
-    public InputAction RightTurn;
     private int rotation;
 
     // Update is called once per frame
     void Update()
-    {   //I am 1 Million percent sure there's a better way to handle this, but I do not have the time to reassess
+    {   
+        if(photonView.IsMine == false && PhotonNetwork.IsConnected == true){
+            return;
+        }
+        //I am 1 Million percent sure there's a better way to handle this, but I do not have the time to figure it out
         if (Keyboard.current.wKey.wasPressedThisFrame){
             NorthMovement();
         }
@@ -26,7 +29,7 @@ public class BoatMovement : MonoBehaviour
         }
 
     }
-    void NorthMovement(){
+    void NorthMovement(){ //The rotation functions don't account very well for direction faced, so these functions have to counteract some of the mis-calculation.
         Vector2 position = transform.position;
         if(direction == "up"){
             position.y +=1.0f;
@@ -71,7 +74,7 @@ public class BoatMovement : MonoBehaviour
             position.x -=0.5f;
             position.y +=0.5f;
             transform.position = position;
-            Debug.Log("Turned East 2");
+            Debug.Log("Turned East");
         }
     }
     void WestMovement(){
@@ -92,7 +95,7 @@ public class BoatMovement : MonoBehaviour
         if(direction == "up"){
             RotateRight();
             direction = "right";
-            Debug.Log("Turned West 2");
+            Debug.Log("Turned West");
         }
     }
     void SouthMovement(){

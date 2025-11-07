@@ -3676,7 +3676,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1587454564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d72ed6ba2a450d0488990567f5f07685, type: 3}
+  m_Script: {fileID: 11500000, guid: dade207aecf67ab48b2463cc6b575539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Com.MysticVentures.SOS.PlayerManager
   attackZone: {fileID: 457670716}
