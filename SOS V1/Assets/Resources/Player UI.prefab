@@ -234,7 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Com.MysticVentures.SOS.PlayerUI
   playerNameText: {fileID: 6103230389655662631}
   playerHealthSlider: {fileID: 4656400493590548629}
-  screenOffset: {x: 0, y: 1, z: 0}
+  screenOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &5696796137775306559
 GameObject:
   m_ObjectHideFlags: 0

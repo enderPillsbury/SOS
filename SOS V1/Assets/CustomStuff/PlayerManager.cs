@@ -15,7 +15,7 @@ namespace Com.MysticVentures.SOS{
                 this.isFiring = (bool)stream.ReceiveNext();
                 this.Health = (float)stream.ReceiveNext();
             }
-            }
+        }
         #endregion 
         #region Private Fields
         [SerializeField]
@@ -91,11 +91,12 @@ namespace Com.MysticVentures.SOS{
         }
 
         void CalledOnLevelWasLoaded(int level){
-            if (!Physics.Raycast(transform.position, -Vector3.up, 5f)){
-                transform.position = new Vector3(0f, 5f, 0f);
+            if (!Physics.Raycast(transform.position, -Vector3.up, 0f)){
+                transform.position = new Vector3(1.5f, 1f, 0f);
+                GameObject _uiGo = Instantiate(this.PlayerUiPrefab);
+                _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
             }
-            GameObject _uiGo = Instantiate(this.PlayerUiPrefab);
-            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+
         }
         
         public override void OnDisable(){

@@ -12,7 +12,7 @@ namespace Com.MysticVentures.SOS{
         private Slider playerHealthSlider;
 
         private PlayerManager target;
-        float characterControllerHeight;
+        float characterControllerHeight = 0f;
         Transform targetTransform;
         Renderer targetRenderer;
         CanvasGroup _canvasGroup;
@@ -39,7 +39,7 @@ namespace Com.MysticVentures.SOS{
             }
             if (targetTransform != null){
                 targetPosition = targetTransform.position;
-                targetPosition.y = characterControllerHeight;
+                targetPosition.y += characterControllerHeight;
                 this.transform.position = Camera.main.WorldToScreenPoint (targetPosition) + screenOffset;
             }
         }
