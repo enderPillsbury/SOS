@@ -12,6 +12,7 @@ namespace Com.MysticVentures.SOS{
         private Slider playerHealthSlider;
 
         private PlayerManager target;
+        float characterControllerHeight;
         Transform targetTransform;
         Renderer targetRenderer;
         CanvasGroup _canvasGroup;
@@ -38,6 +39,7 @@ namespace Com.MysticVentures.SOS{
             }
             if (targetTransform != null){
                 targetPosition = targetTransform.position;
+                targetPosition.y = characterControllerHeight;
                 this.transform.position = Camera.main.WorldToScreenPoint (targetPosition) + screenOffset;
             }
         }
@@ -52,12 +54,16 @@ namespace Com.MysticVentures.SOS{
             target = _target;
             targetTransform = this.target.GetComponent<Transform>();
             targetRenderer = this.target.GetComponent<Renderer>();
+            CharacterController characterController = _target.GetComponent<CharacterController>();
+            if (characterController != null){
+                characterControllerHeight = characterController.height;
+            }
             if (playerNameText != null){
                 playerNameText.text = target.photonView.Owner.NickName;
             }
         }
         [SerializeField]
-        private Vector3 screenOffset = new Vector3 (0f, -4f, 0f);
+        private Vector3 screenOffset = new Vector3 (0f, -1f, 0f);
         #endregion
     }
 }

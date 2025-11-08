@@ -23,6 +23,9 @@ namespace Com.MysticVentures.SOS{
         private float cooldown = 0f;
         bool isFiring;
         public float Health = 1f;
+        void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode){
+            this.CalledOnLevelWasLoaded(scene.buildIndex);
+        }
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -34,6 +37,7 @@ namespace Com.MysticVentures.SOS{
             else{
                 Debug.LogWarning("<Color=Red><a>Warning</a></Color> PlayerUiPrefab reference on player Prefab.", this);
             }
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
         }
         void Awake(){
             GameObject _uiGo = Instantiate(this.PlayerUiPrefab);
@@ -53,9 +57,7 @@ namespace Com.MysticVentures.SOS{
         void Update(){
             if (photonView.IsMine){
                 ProcessInputs();
-            }
-            if (Health <= 0f){
-                {
+                if (Health <= 0f){
                     GameManager.Instance.LeaveRoom();
                 }
             }
@@ -82,6 +84,23 @@ namespace Com.MysticVentures.SOS{
                 return;
             }
             Health -= 0.1f * Time.deltaTime;
+        }
+
+        void OnLevelWasLoaded(int level){
+            this.CalledOnLevelWasLoaded(level);
+        }
+
+        void CalledOnLevelWasLoaded(int level){
+            if (!Physics.Raycast(transform.position, -Vector3.up, 5f)){
+                transform.position = new Vector3(0f, 5f, 0f);
+            }
+            GameObject _uiGo = Instantiate(this.PlayerUiPrefab);
+            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+        }
+        
+        public override void OnDisable(){
+            base.OnDisable();
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
         #endregion
