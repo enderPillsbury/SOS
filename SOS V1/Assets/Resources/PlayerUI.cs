@@ -21,17 +21,17 @@ namespace Com.MysticVentures.SOS{
 
         #region MonoBehavior Callbacks
         void Update(){
-            if (playerHealthSlider != null){
-                playerHealthSlider.value = target.Health;
-            }
             if(target == null){
                 Destroy(this.gameObject);
                 return;
             }
+            if (playerHealthSlider != null){
+                playerHealthSlider.value = target.Health;
+            }
         }
         void Awake(){
-            this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
             _canvasGroup = this.GetComponent<CanvasGroup>();
+            this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
         }
         void LateUpdate(){
             if (targetRenderer!= null){
@@ -51,15 +51,15 @@ namespace Com.MysticVentures.SOS{
                 Debug.LogError("<Color=Red><a>Missing</a></Color> PlayMakerManager targer for PlayerUI.SetTarget", this);
                 return;
             }
-            target = _target;
+            this.target = _target;
             targetTransform = this.target.GetComponent<Transform>();
             targetRenderer = this.target.GetComponent<Renderer>();
-            CharacterController characterController = _target.GetComponent<CharacterController>();
-            if (characterController != null){
-                characterControllerHeight = characterController.height;
+            CharacterController _characterController = _target.GetComponent<CharacterController>();
+            if (_characterController != null){
+                characterControllerHeight = _characterController.height;
             }
             if (playerNameText != null){
-                playerNameText.text = target.photonView.Owner.NickName;
+                playerNameText.text = this.target.photonView.Owner.NickName;
             }
         }
         [SerializeField]

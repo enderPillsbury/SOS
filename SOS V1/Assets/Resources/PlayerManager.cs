@@ -8,8 +8,8 @@ namespace Com.MysticVentures.SOS{
         #region IPunObservable implementation
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
             if(stream.IsWriting){
-                stream.SendNext(isFiring);
-                stream.SendNext(Health);
+                stream.SendNext(this.isFiring);
+                stream.SendNext(this.Health);
             }
             else{
                 this.isFiring = (bool)stream.ReceiveNext();
@@ -20,7 +20,11 @@ namespace Com.MysticVentures.SOS{
         #region Private Fields
         [SerializeField]
         private GameObject attackZone;
+
+        public static GameObject LocalPlayerInstance;
+
         private float cooldown = 0f;
+
         bool isFiring;
         public float Health = 1f;
         void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode){
@@ -30,7 +34,7 @@ namespace Com.MysticVentures.SOS{
 
         #region MonoBehaviour Callbacks
         void Start(){
-            if (PlayerUiPrefab != null){
+            if (this.PlayerUiPrefab != null){
                 GameObject _uiGo =  Instantiate(PlayerUiPrefab);
                 _uiGo.SendMessage ("SetTarget", this, SendMessageOptions.RequireReceiver);
             }
@@ -40,12 +44,6 @@ namespace Com.MysticVentures.SOS{
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
         }
         void Awake(){
-            GameObject _uiGo = Instantiate(this.PlayerUiPrefab);
-            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
-            if (photonView.IsMine){
-                PlayerManager.LocalPlayerInstance = this.gameObject;
-            }
-            DontDestroyOnLoad(this.gameObject);
             if (attackZone == null){
                 Debug.LogError("<Color=Red><a>Missing</a></Color> Attack Zone Reference.", this);
             }
@@ -53,19 +51,27 @@ namespace Com.MysticVentures.SOS{
             {
                 attackZone.SetActive(false);
             }
+            DontDestroyOnLoad(this.gameObject);
+            if (photonView.IsMine){
+                PlayerManager.LocalPlayerInstance = this.gameObject;
+            }
+            
         }
+        private bool leavingRoom;
         void Update(){
             if (photonView.IsMine){
-                ProcessInputs();
-                if (Health <= 0f){
-                    GameManager.Instance.LeaveRoom();
+                this.ProcessInputs();
+                if (this.Health <= 0f && !this.leavingRoom){
+                    this.leavingRoom = PhotonNetwork.LeaveRoom();
                 }
             }
-            if(attackZone !=null && isFiring != attackZone.activeInHierarchy){
-                attackZone.SetActive(isFiring);
+            if(this.attackZone !=null && this.isFiring != this.attackZone.activeInHierarchy){
+                this.attackZone.SetActive(this.isFiring);
             }
         }
-
+        public override void OnLeftRoom(){
+            this.leavingRoom = false;
+        }
         void OnTriggerEnter(Collider other){
             if (!photonView.IsMine){
                 return;
@@ -73,7 +79,7 @@ namespace Com.MysticVentures.SOS{
             if (!other.name.Contains("Attack")){
                 return;
             }
-            Health -= 0.1f;
+            this.Health -= 0.1f;
         }
 
         void OnTriggerStay(Collider other){
@@ -83,7 +89,7 @@ namespace Com.MysticVentures.SOS{
             if (!other.name.Contains("Attack")){
                 return;
             }
-            Health -= 0.1f * Time.deltaTime;
+            this.Health -= 0.1f * Time.deltaTime;
         }
 
         void OnLevelWasLoaded(int level){
@@ -93,9 +99,9 @@ namespace Com.MysticVentures.SOS{
         void CalledOnLevelWasLoaded(int level){
             if (!Physics.Raycast(transform.position, -Vector3.up, 0f)){
                 transform.position = new Vector3(1.5f, 1f, 0f);
-                GameObject _uiGo = Instantiate(this.PlayerUiPrefab);
-                _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
             }
+            GameObject _uiGo = Instantiate(this.PlayerUiPrefab);
+            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
 
         }
         
@@ -106,7 +112,7 @@ namespace Com.MysticVentures.SOS{
 
         #endregion
         #region Custom
-        public static GameObject LocalPlayerInstance;
+
         [SerializeField]
         public GameObject PlayerUiPrefab;
         void ProcessInputs(){

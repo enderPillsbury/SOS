@@ -3,14 +3,9 @@ using UnityEngine.InputSystem;
 using Photon.Pun;
 using System.Collections;
 
-public class BoatMovement : MonoBehaviourPunCallbacks, IPunObservable
+public class BoatMovement : MonoBehaviourPun
 {
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
-        if(stream.IsWriting){
-        }
-        else{
-        }
-    }
+    
     string direction = "up";
     private int rotation;
 
